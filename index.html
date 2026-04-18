@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prachuthep Co,. Ltd - Load Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="max-w-5xl mx-auto p-6">
+        <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center gap-3">
+                <!-- 替换为实际的公司Logo图片 -->
+                <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/585cb9c06a984e1182e19cce969bf194.png~tplv-a9rns2rl98-image.png?lk3s=8e244e95&rcl=20260418152829D2D0646075188041DFAE&rrcfp=dafada99&x-expires=2092721309&x-signature=aC1axksqmx8knYe96hxf74GM%2FzI%3D" alt="Prachuthep Logo" class="w-16 h-16 rounded object-cover">
+                <h1 class="text-xl font-bold text-gray-800" data-i18n="company">Prachuthep Co,. Ltd</h1>
+            </div>
+            <button id="langBtn" class="px-3 py-1 bg-blue-500 text-white rounded">EN / ไทย</button>
+        </div>
+
+        <div class="mb-8 border-b pb-4">
+            <h2 class="text-2xl font-bold text-center mt-2 flex items-center justify-center gap-2">
+                <span class="text-yellow-500">⚡</span>
+                <span data-i18n="title">Daily Load Analysis Tool</span>
+            </h2>
+            <p class="text-center text-gray-600 mt-2" data-i18n="subtitle">
+                Map your energy consumption and get a matched Prachuthep solar package recommendation
+            </p>
+        </div>
+
+        <!-- 已删除 Your Information 整个模块 -->
+
+        <div class="bg-white rounded shadow mb-6">
+            <div class="bg-blue-500 text-white p-3 rounded-t flex items-center gap-2">
+                <span>📊</span> <span data-i18n="loadAnalysis">Daily Load Analysis</span>
+            </div>
+            <div class="p-4 overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-800 text-white">
+                        <tr>
+                            <th class="p-2">#</th>
+                            <th class="p-2 text-left" data-i18n="appliance">APPLIANCE</th>
+                            <th class="p-2" data-i18n="qty">QTY</th>
+                            <th class="p-2" data-i18n="watts">WATTS</th>
+                            <th class="p-2" data-i18n="hours">HOURS/DAY</th>
+                            <th class="p-2" data-i18n="wh">WH/DAY</th>
+                            <th class="p-2"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="loadTableBody">
+                        <tr class="border-b">
+                            <td class="p-2 text-center">1</td>
+                            <td class="p-2"><input type="text" value="Air Conditioner 1.0 BTU" class="w-full border p-1 text-sm"></td>
+                            <td class="p-2"><input type="number" value="1" min="0" class="w-16 border p-1 text-center qty-input"></td>
+                            <td class="p-2"><input type="number" value="750" min="0" class="w-20 border p-1 text-center watts-input"></td>
+                            <td class="p-2"><input type="number" value="8" min="0" max="24" class="w-16 border p-1 text-center hours-input"></td>
+                            <td class="p-2 wh-day text-center font-medium">6000</td>
+                            <td class="p-2 text-center"><button class="text-red-500 delete-row">✕</button></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-2 text-center">2</td>
+                            <td class="p-2"><input type="text" value="Ceiling Fan" class="w-full border p-1 text-sm"></td>
+                            <td class="p-2"><input type="number" value="4" min="0" class="w-16 border p-1 text-center qty-input"></td>
+                            <td class="p-2"><input type="number" value="35" min="0" class="w-20 border p-1 text-center watts-input"></td>
+                            <td class="p-2"><input type="number" value="12" min="0" max="24" class="w-16 border p-1 text-center hours-input"></td>
+                            <td class="p-2 wh-day text-center font-medium">1680</td>
+                            <td class="p-2 text-center"><button class="text-red-500 delete-row">✕</button></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-2 text-center">3</td>
+                            <td class="p-2"><input type="text" value="Refrigerator" class="w-full border p-1 text-sm"></td>
+                            <td class="p-2"><input type="number" value="1" min="0" class="w-16 border p-1 text-center qty-input"></td>
+                            <td class="p-2"><input type="number" value="120" min="0" class="w-20 border p-1 text-center watts-input"></td>
+                            <td class="p-2"><input type="number" value="24" min="0" max="24" class="w-16 border p-1 text-center hours-input"></td>
+                            <td class="p-2 wh-day text-center font-medium">2880</td>
+                            <td class="p-2 text-center"><button class="text-red-500 delete-row">✕</button></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-2 text-center">4</td>
+                            <td class="p-2"><input type="text" value="LED Light" class="w-full border p-1 text-sm"></td>
+                            <td class="p-2"><input type="number" value="6" min="0" class="w-16 border p-1 text-center qty-input"></td>
+                            <td class="p-2"><input type="number" value="18" min="0" class="w-20 border p-1 text-center watts-input"></td>
+                            <td class="p-2"><input type="number" value="6" min="0" max="24" class="w-16 border p-1 text-center hours-input"></td>
+                            <td class="p-2 wh-day text-center font-medium">648</td>
+                            <td class="p-2 text-center"><button class="text-red-500 delete-row">✕</button></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-2 text-center">5</td>
+                            <td class="p-2"><input type="text" value="Smart TV" class="w-full border p-1 text-sm"></td>
+                            <td class="p-2"><input type="number" value="1" min="0" class="w-16 border p-1 text-center qty-input"></td>
+                            <td class="p-2"><input type="number" value="100" min="0" class="w-20 border p-1 text-center watts-input"></td>
+                            <td class="p-2"><input type="number" value="6" min="0" max="24" class="w-16 border p-1 text-center hours-input"></td>
+                            <td class="p-2 wh-day text-center font-medium">600</td>
+                            <td class="p-2 text-center"><button class="text-red-500 delete-row">✕</button></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-2 text-center">6</td>
+                            <td class="p-2"><input type="text" value="Water Pump" class="w-full border p-1 text-sm"></td>
+                            <td class="p-2"><input type="number" value="1" min="0" class="w-16 border p-1 text-center qty-input"></td>
+                            <td class="p-2"><input type="number" value="550" min="0" class="w-20 border p-1 text-center watts-input"></td>
+                            <td class="p-2"><input type="number" value="2" min="0" max="24" class="w-16 border p-1 text-center hours-input"></td>
+                            <td class="p-2 wh-day text-center font-medium">1100</td>
+                            <td class="p-2 text-center"><button class="text-red-500 delete-row">✕</button></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-2 text-center">7</td>
+                            <td class="p-2"><input type="text" value="Rice Cooker" class="w-full border p-1 text-sm"></td>
+                            <td class="p-2"><input type="number" value="1" min="0" class="w-16 border p-1 text-center qty-input"></td>
+                            <td class="p-2"><input type="number" value="700" min="0" class="w-20 border p-1 text-center watts-input"></td>
+                            <td class="p-2"><input type="number" value="2" min="0" max="24" class="w-16 border p-1 text-center hours-input"></td>
+                            <td class="p-2 wh-day text-center font-medium">1400</td>
+                            <td class="p-2 text-center"><button class="text-red-500 delete-row">✕</button></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-2 text-center">8</td>
+                            <td class="p-2"><input type="text" value="Wifi Router" class="w-full border p-1 text-sm"></td>
+                            <td class="p-2"><input type="number" value="1" min="0" class="w-16 border p-1 text-center qty-input"></td>
+                            <td class="p-2"><input type="number" value="12" min="0" class="w-20 border p-1 text-center watts-input"></td>
+                            <td class="p-2"><input type="number" value="24" min="0" max="24" class="w-16 border p-1 text-center hours-input"></td>
+                            <td class="p-2 wh-day text-center font-medium">288</td>
+                            <td class="p-2 text-center"><button class="text-red-500 delete-row">✕</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button id="addRowBtn" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    + <span data-i18n="addAppliance">Add New Appliance</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="bg-white rounded shadow p-6 mb-6">
+            <h3 class="text-lg font-bold mb-3" data-i18n="totalConsumption">Total Daily Energy Consumption</h3>
+            <p class="text-2xl font-bold text-blue-600" id="totalConsumption">0 Wh / Day</p>
+            <!-- 已删除 Submit 和 Export PDF 按钮 -->
+        </div>
+
+        <div id="recommendation" class="bg-white rounded shadow p-6">
+            <h3 class="text-lg font-bold mb-4" data-i18n="solarRecommend">Solar System Recommendation</h3>
+            <div id="recommendContent" class="space-y-2 text-gray-700"></div>
+        </div>
+    </div>
+
+    <!-- 公司联系信息 -->
+    <div class="max-w-5xl mx-auto p-6 mt-8 bg-gray-100 rounded shadow">
+        <p class="text-gray-800 font-medium">Prachuthep Co.,Ltd.</p>
+        <p class="text-gray-600 text-sm">99/37 Moo 22 Bangphli-Tumru,</p>
+        <p class="text-gray-600 text-sm">Bangphli-Yai, Bangphli, Samutprakran 10540, Thailand</p>
+        <p class="text-gray-600 text-sm mt-1">Tax ID 0-1255-64015-78-8</p>
+        <p class="text-gray-600 text-sm">Tel. +66 90 944 9428</p>
+        <p class="text-gray-600 text-sm">Email: Prachuthep@gmail.com</p>
+        <p class="text-gray-600 text-sm">Line ID: Dudeshop888</p>
+    </div>
+
+    <script>
+        const i18n = {
+            en: {
+                company: "Prachuthep Co,. Ltd",
+                title: "Daily Load Analysis Tool",
+                subtitle: "Map your energy consumption and get a matched Prachuthep solar package recommendation",
+                loadAnalysis: "Daily Load Analysis",
+                appliance: "APPLIANCE",
+                qty: "QTY",
+                watts: "WATTS",
+                hours: "HOURS/DAY",
+                wh: "WH/DAY",
+                addAppliance: "Add New Appliance",
+                totalConsumption: "Total Daily Energy Consumption",
+                solarRecommend: "Solar System Recommendation",
+                recommendTitle: "Recommended Configuration Based on Your Consumption",
+                solarPanel: "Solar Panel Power",
+                battery: "Battery Capacity",
+                inverter: "Inverter Power",
+                usage: "Daily Usage"
+            },
+            th: {
+                company: "Prachuthep Co,. Ltd",
+                title: "เครื่องมือวิเคราะห์โหลดรายวัน",
+                subtitle: "วัดการใช้พลังงานของคุณและรับคำแนะนำชุดโซล่าเซลล์ Prachuthep ที่เหมาะสม",
+                loadAnalysis: "วิเคราะห์โหลดรายวัน",
+                appliance: "เครื่องใช้ไฟฟ้า",
+                qty: "จำนวน",
+                watts: "วัตต์",
+                hours: "ชั่วโมง/วัน",
+                wh: "วัตต์ชั่วโมง/วัน",
+                addAppliance: "เพิ่มเครื่องใช้ไฟฟ้า",
+                totalConsumption: "การใช้พลังงานรวมรายวัน",
+                solarRecommend: "คำแนะนำระบบโซล่าเซลล์",
+                recommendTitle: "การตั้งค่าที่แนะนำตามการใช้พลังงานของคุณ",
+                solarPanel: "กำลังแผงโซล่าเซลล์",
+                battery: "ความจุแบตเตอรี่",
+                inverter: "กำลังอินเวอร์เตอร์",
+                usage: "การใช้ประจำวัน"
+            }
+        };
+
+        const langList = ["en", "th"];
+        let currentLangIndex = 0;
+        let currentLang = langList[currentLangIndex];
+        const langBtn = document.getElementById("langBtn");
+
+        langBtn.addEventListener("click", () => {
+            currentLangIndex = (currentLangIndex + 1) % langList.length;
+            currentLang = langList[currentLangIndex];
+            const btnText = {
+                en: "EN / ไทย",
+                th: "ไทย / EN"
+            };
+            langBtn.textContent = btnText[currentLang];
+            document.querySelectorAll("[data-i18n]").forEach(el => {
+                const key = el.getAttribute("data-i18n");
+                el.textContent = i18n[currentLang][key];
+            });
+            calculateRecommendation();
+        });
+
+        const tableBody = document.getElementById('loadTableBody');
+        const totalConsumptionEl = document.getElementById('totalConsumption');
+        const addRowBtn = document.getElementById('addRowBtn');
+
+        function parseNumberWithCommas(str) {
+            return parseFloat(str.replace(/,/g, '')) || 0;
+        }
+
+        function calculateRow(row) {
+            const qty = parseInt(row.querySelector('.qty-input').value) || 0;
+            const watts = parseInt(row.querySelector('.watts-input').value) || 0;
+            const hours = parseInt(row.querySelector('.hours-input').value) || 0;
+            const whDay = qty * watts * hours;
+            row.querySelector('.wh-day').textContent = whDay.toLocaleString();
+            return whDay;
+        }
+
+        function calculateTotal() {
+            let total = 0;
+            document.querySelectorAll('#loadTableBody tr').forEach(row => {
+                total += calculateRow(row);
+            });
+            // 总用电量单位改为 KWh（显示时转换为 K 单位）
+            const totalKWh = (total / 1000).toFixed(1);
+            const unitText = {
+                en: `${totalKWh} KWh / Day`,
+                th: `${totalKWh} กิโลวัตต์ชั่วโมง / วัน`
+            };
+            totalConsumptionEl.textContent = unitText[currentLang];
+            calculateRecommendation();
+        }
+
+        function bindRowEvents(row) {
+            row.querySelectorAll('input').forEach(input => {
+                input.addEventListener('input', calculateTotal);
+            });
+            row.querySelector('.delete-row').addEventListener('click', () => {
+                row.remove();
+                document.querySelectorAll('#loadTableBody tr').forEach((r, idx) => {
+                    r.querySelector('td:first-child').textContent = idx + 1;
+                });
+                calculateTotal();
+            });
+        }
+
+        addRowBtn.addEventListener('click', () => {
+            const rowCount = document.querySelectorAll('#loadTableBody tr').length + 1;
+            const newRow = document.createElement('tr');
+            newRow.className = 'border-b';
+            newRow.innerHTML = `
+                <td class="p-2 text-center">${rowCount}</td>
+                <td class="p-2"><input type="text" placeholder="Appliance Name" class="w-full border p-1 text-sm"></td>
+                <td class="p-2"><input type="number" value="0" min="0" class="w-16 border p-1 text-center qty-input"></td>
+                <td class="p-2"><input type="number" value="0" min="0" class="w-20 border p-1 text-center watts-input"></td>
+                <td class="p-2"><input type="number" value="0" min="0" max="24" class="w-16 border p-1 text-center hours-input"></td>
+                <td class="p-2 wh-day text-center font-medium">0</td>
+                <td class="p-2 text-center"><button class="text-red-500 delete-row">✕</button></td>
+            `;
+            tableBody.appendChild(newRow);
+            bindRowEvents(newRow);
+            calculateTotal();
+        });
+
+        // 推荐计算（修改：51.2V Low Voltage + K单位 + 移除质保）
+        function calculateRecommendation() {
+            const totalText = totalConsumptionEl.textContent;
+            const totalKWh = parseNumberWithCommas(totalText.split(' ')[0]);
+            const totalWh = totalKWh * 1000; // 转回Wh用于计算
+            const content = document.getElementById("recommendContent");
+
+            const peakSunHours = 4;
+            const systemEfficiency = 0.8;
+            const batteryDod = 0.5;
+            const backupDays = 1;
+
+            // 计算后转换为 K 单位（保留1位小数）
+            const panelPowerW = Math.ceil((totalWh / peakSunHours) / systemEfficiency / 1000) * 1000;
+            const panelPowerKW = (panelPowerW / 1000).toFixed(1);
+            
+            const batteryCapacityW = Math.ceil((totalWh * backupDays) / batteryDod / 1000) * 1000;
+            const batteryCapacityKW = (batteryCapacityW / 1000).toFixed(1);
+            
+            const inverterPowerW = Math.ceil(panelPowerW * 1.2);
+            const inverterPowerKVA = (inverterPowerW / 1000).toFixed(1);
+
+            content.innerHTML = `
+                <p class="font-medium">${i18n[currentLang].recommendTitle}</p>
+                <p>${i18n[currentLang].usage}: ${totalKWh} KWh</p>
+                <p>${i18n[currentLang].solarPanel}: ${panelPowerKW} KWp</p>
+                <p>${i18n[currentLang].battery}: ${batteryCapacityKW} KWh / 51.2V Low Voltage Lithium Battery</p>
+                <p>${i18n[currentLang].inverter}: ${inverterPowerKVA} KVA Pure Sine Wave</p>
+            `;
+        }
+
+        // 已删除 Submit 和 Export PDF 相关代码
+
+        document.querySelectorAll('#loadTableBody tr').forEach(row => bindRowEvents(row));
+        calculateTotal();
+    </script>
+</body>
+</html>
